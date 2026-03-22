@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS users(
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    pass_hash TEXT NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS apps(
+    id SERIAL PRIMARY KEY,
+    name_app TEXT NOT NULL UNIQUE,
+);
