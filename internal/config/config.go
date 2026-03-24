@@ -22,9 +22,7 @@ type ConfigGRPC struct {
 }
 
 func MustLoad() *Config {
-	if err := godotenv.Load(); err != nil {
-		panic("")
-	}
+	_ = godotenv.Load()
 
 	configPath := os.Getenv("CONFIG_PATH")
 	if configPath == "" {

@@ -1,8 +1,9 @@
 services:
   db:
     image: postgres:17-bookworm
+    container_name: database
     environment:
-      POSTGRES_PASS: ${DB_PASS}
+      POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_NAME}
     ports:
@@ -25,10 +26,15 @@ services:
       db:
         condition: service_healthy
     environment:
+      CONFIG_PATH: ${CONFIG_PATH}
+      STORAGE_PATH: "postgres://${DB_USER}:${DB_PASS}@db/${DB_NAME}?sslmode=disable"
       DB_HOST: db
       DB_PORT: 5432
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_NAME}
-      CONFIG_PATH: ${CONFIG_PATH}
       SECRET_KEY: ${SECRET_KEY}
+
+
+volumes:
+  db-data:

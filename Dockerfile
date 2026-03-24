@@ -13,11 +13,15 @@ RUN CGO_ENABLED=0 go build -o /bin/service ./cmd/sso/main.go
 
 FROM alpine:3.19
 
-WORKDIR /app/bin
+WORKDIR /app
 
 COPY --from=builder /bin/service /app/bin/service
+
+COPY --from=builder /app/config/config.yaml ./config/config.yaml
+
+COPY --from=builder /app/.env .
 
 
 EXPOSE 8080
 
-CMD ["./service"]
+CMD ["/app/bin/service"]
